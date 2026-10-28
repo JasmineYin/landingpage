@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f6f2">
+<meta name="description" content="StreetTalk — unscripted street interviews, turned into ad creative. One brief, three steps, real reactions.">
+<title>StreetTalk — Authentic generated Content™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* =========================================================
+   TOKENS — 只改这里就能换全局配色/字号
+   ========================================================= */
+:root{
+  --paper:#f7f6f2;
+  --ink:#101012;
+  --ink-soft:#3a3840;
+  --muted:#6f6d76;
+  --line:rgba(16,16,18,.10);
+
+  --violet:#5d55e8;
+  --violet-deep:#4a43d6;
+  --lime:#d9f24f;
+
+  --dark:#111110;
+  --dark-2:#191918;
+  --dark-3:#222221;
+  --dark-line:rgba(255,255,255,.08);
+  --dark-text:#f3f2ed;
+  --dark-muted:#9c9a94;
+
+  --container:1180px;
+  --r-card:20px;
+  --r-pill:999px;
+  --r-sm:10px;
+
+  --fs-h1:clamp(46px,7.6vw,96px);
+  --fs-h2:clamp(24px,2.4vw,30px);
+  --fs-h3:17px;
+  --fs-body:16px;
+  --fs-sm:14px;
+  --fs-xs:12px;
+
+  --shadow-soft:0 1px 2px rgba(16,16,18,.04),0 18px 44px -26px rgba(16,16,18,.45);
+  --shadow-card:0 2px 6px rgba(16,16,18,.06),0 24px 60px -32px rgba(16,16,18,.5);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-width:320px;
+  overflow-x:hidden;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Inter","Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size:var(--fs-body);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:#cfcbff;color:#111014}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px;border-radius:4px}
+
+.skip{
+  position:fixed;top:8px;left:8px;z-index:200;
+  padding:10px 16px;border-radius:var(--r-sm);
+  background:var(--ink);color:var(--paper);
+  transform:translateY(-160%);transition:transform .2s var(--ease);
+}
+.skip:focus-visible{transform:translateY(0)}
+
+.wrap{width:min(100% - 48px,var(--container));margin-inline:auto}
+
+/* =========================================================
+   NAV — 悬浮胶囊
+   ========================================================= */
+.nav{
+  position:fixed;top:18px;left:50%;translate:-50% 0;z-index:100;
+  display:flex;align-items:center;gap:28px;
+  padding:10px 12px 10px 24px;
+  border-radius:var(--r-pill);
+  background:rgba(16,16,18,.92);
+  backdrop-filter:blur(14px) saturate(140%);
+  color:#fff;
+  box-shadow:0 10px 40px -18px rgba(16,16,18,.8);
+  max-width:calc(100% - 32px);
+}
+.brand{
+  font-size:15px;font-weight:700;letter-spacing:.14em;
+  display:flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.brand .brand-dot{color:var(--violet);font-size:18px;line-height:0}
+.nav-links{display:flex;gap:22px;font-size:var(--fs-sm)}
+.nav-links a{
+  color:rgba(255,255,255,.72);
+  padding:6px 2px;
+  transition:color .18s var(--ease);
+}
+.nav-links a:hover{color:#fff}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 22px;border-radius:var(--r-pill);
+  font-size:var(--fs-sm);font-weight:600;letter-spacing:.01em;
+  white-space:nowrap;
+  transition:transform .18s var(--ease),background .18s var(--ease),box-shadow .18s var(--ease);
+}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--violet);color:#fff;box-shadow:0 8px 24px -12px rgba(93,85,232,.9)}
+.btn-primary:hover{background:var(--violet-deep)}
+.btn-quiet{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-quiet:hover{background:rgba(16,16,18,.04)}
+.btn-sm{padding:10px 16px;font-size:13px;border-radius:var(--r-sm)}
+.btn-dark{background:var(--dark-3);color:var(--dark-text);border:1px solid var(--dark-line)}
+.btn-dark:hover{background:#2c2c2a}
+
+/* =========================================================
+   1 · HERO — 居中标题 + 三栏联动舞台
+   ========================================================= */
+.hero{position:relative;padding:128px 0 88px;overflow:hidden}
+.hero-copy{max-width:880px;margin:0 auto;text-align:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  margin:0 0 22px;
+  font-size:var(--fs-xs);font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.6}
+.hero h1{
+  margin:0;
+  font-size:var(--fs-h1);
+  font-weight:700;
+  line-height:.94;
+  letter-spacing:-.038em;
+}
+.hero h1 sup{
+  font-size:.26em;font-weight:600;letter-spacing:0;
+  vertical-align:super;
+  margin-left:.06em;
+  color:var(--violet);
+}
+.lede{
+  margin:26px auto 34px;
+  max-width:52ch;
+  font-size:clamp(16px,1.25vw,18px);
+  line-height:1.55;
+  color:var(--ink-soft);
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+
+/* ---------- 舞台 ---------- */
+.stage{
+  position:relative;
+  margin-top:56px;
+  height:clamp(440px,50vw,580px);
+  display:grid;
+  place-items:center;
+}
+
+/* 左右轨道：贴着手机，内边缘离机身 20px 左右 */
+.rail{
+  position:absolute;
+  top:0;bottom:0;
+  width:min(34%,330px);
+  z-index:2;
+  pointer-events:none;
+}
+.rail-left{left:auto;right:calc(50% + clamp(142px,12.5vw,175px))}
+.rail-right{right:auto;left:calc(50% + clamp(142px,12.5vw,175px))}
+
+.tile{
+  position:absolute;
+  top:50%;
+  width:var(--w,150px);
+  transition:transform .85s var(--ease),opacity .55s var(--ease);
+  will-change:transform,opacity;
+}
+.rail-left .tile{right:0;left:auto;transform-origin:right center}
+.rail-right .tile{left:0;right:auto;transform-origin:left center}
+
+.tile-face{
+  aspect-ratio:1;                 /* 左产品卡、右图表卡统一为正方形 */
+  display:flex;flex-direction:column;justify-content:center;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 2px 6px rgba(16,16,18,.05),0 18px 40px -24px rgba(16,16,18,.45);
+}
+.tile-left .tile-face{padding:10px;background:#fbfaf6}
+.tile-left .mono{
+  position:relative;overflow:hidden;
+  display:grid;place-items:center;
+  aspect-ratio:1;border-radius:12px;
+  font-size:42px;font-weight:700;letter-spacing:-.04em;
+  color:rgba(255,255,255,.92);
+  text-shadow:0 1px 0 rgba(0,0,0,.12);
+}
+.tile-right .tile-face{padding:16px}
+/* 第 3–5 张不是正方形（横图 / 竖图），改成完整显示：
+   不裁切，多出来的地方用白底补，避免产品被切掉 */
+.rail-left .tile:nth-child(n+3) .tile-img{
+  object-fit:contain;
+  background:#fff;
+}
+.tile-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;
+}
+.tile-right svg{display:block;width:100%;height:auto}
+
+/* 右侧图表：从无到有，只播一次（不循环）。
+   动画挂在 .chart-in 上，换幕时由 JS 重新加上去，就会重播一次 */
+@keyframes char-bar-x{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes char-bar-y{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes char-draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+@keyframes char-pop{from{transform:scale(0)}to{transform:scale(1)}}
+
+.tile-right.chart-in .bar-h{
+  transform-box:fill-box;transform-origin:left center;
+  animation:char-bar-x .9s var(--ease) both;
+}
+.tile-right.chart-in .bar-v{
+  transform-box:fill-box;transform-origin:center bottom;
+  animation:char-bar-y .9s var(--ease) both;
+}
+.tile-right.chart-in .chart-line,
+.tile-right.chart-in .arc{
+  stroke-dasharray:320;stroke-dashoffset:320;
+  animation:char-draw 1.4s var(--ease) .1s both;
+}
+.tile-right.chart-in .pulse{
+  transform-box:fill-box;transform-origin:center;
+  animation:char-pop .45s var(--ease) .6s both;
+}
+
+
+/* 手机固定在舞台中央 */
+.phone{
+  position:relative;
+  z-index:3;
+  width:clamp(248px,23vw,310px);
+  aspect-ratio:9/16;
+  border-radius:44px;
+  padding:10px;
+  background:linear-gradient(160deg,#2a2a2c,#0d0d0f 55%);
+  box-shadow:var(--shadow-card);
+}
+.phone-screen{
+  position:relative;
+  height:100%;
+  overflow:hidden;
+  border-radius:35px;
+  background:#0b0b0c;
+}
+.phone-video{
+  width:100%;height:100%;object-fit:cover;
+  cursor:pointer;
+  transition:opacity .3s var(--ease);
+}
+.phone-notch{
+  position:absolute;top:20px;left:50%;translate:-50% 0;z-index:2;
+  width:34%;height:18px;border-radius:var(--r-pill);
+  background:#0a0a0b;
+}
+.phone-top{
+  position:absolute;inset:30px 16px auto;z-index:2;
+  display:flex;justify-content:space-between;align-items:center;
+  color:#fff;font-size:11px;
+}
+.live{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 11px;border-radius:var(--r-pill);
+  background:rgba(12,12,14,.72);
+  backdrop-filter:blur(6px);
+  font-weight:600;letter-spacing:.08em;
+}
+.live i{
+  width:6px;height:6px;border-radius:50%;background:#ff5a4d;
+  box-shadow:0 0 0 3px rgba(255,90,77,.25);
+}
+.phone-bottom{
+  position:absolute;inset:auto 12px 14px;z-index:2;
+  display:flex;align-items:center;gap:10px;
+  padding:12px;
+  border-radius:16px;
+  background:rgba(12,12,14,.82);
+  backdrop-filter:blur(10px);
+  color:#fff;
+}
+.phone-bottom .thumb{width:34px;height:34px;border-radius:9px;object-fit:cover;flex:none}
+.phone-bottom .meta{min-width:0}
+.phone-bottom .kicker{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.phone-bottom .title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.phone-bottom .go{
+  margin-left:auto;flex:none;
+  width:32px;height:32px;border-radius:50%;
+  display:grid;place-items:center;background:#fff;color:#111;
+}
+
+/* 进度点 */
+.stage-nav{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:6px;
+}
+.stage-nav .hint{
+  margin-right:10px;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+.dot{
+  width:7px;height:7px;border-radius:var(--r-pill);
+  background:rgba(16,16,18,.16);
+  transition:width .35s var(--ease),background .25s var(--ease);
+}
+.dot:hover{background:rgba(16,16,18,.35)}
+.dot[aria-current="true"]{width:24px;background:var(--ink)}
+
+/* =========================================================
+   深色区（第 2 · 3 部分）
+   ========================================================= */
+.dark{background:var(--dark);color:var(--dark-text)}
+.section-head{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:32px;
+  margin-bottom:30px;
+}
+.section-head h2{margin:0;font-size:var(--fs-h2);font-weight:600;letter-spacing:-.02em}
+.section-head p{margin:8px 0 0;max-width:52ch;color:var(--dark-muted);font-size:var(--fs-sm)}
+.section-head .more{
+  font-size:var(--fs-sm);color:var(--dark-muted);
+  border-bottom:1px solid var(--dark-line);padding-bottom:2px;white-space:nowrap;
+  transition:color .18s var(--ease),border-color .18s var(--ease);
+}
+.section-head .more:hover{color:var(--dark-text);border-color:rgba(255,255,255,.28)}
+
+/* 2 · 视频 + 三步 */
+.workflow{padding:84px 0 0}
+
+.video-slot{
+  position:relative;
+  border-radius:var(--r-card);
+  overflow:hidden;
+  isolation:isolate;
+  background:radial-gradient(120% 120% at 22% 0%,#3a2f24 0%,#231c16 45%,#171310 100%);
+}
+.video-slot video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.video-slot::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45));
+  pointer-events:none;
+}
+.showreel{
+  display:grid;
+  grid-template-columns:minmax(0,340px) minmax(0,1fr);
+  gap:56px;
+  align-items:stretch;
+  margin:0;
+}
+.showreel .video-slot{aspect-ratio:9/16}
+.reel-copy{
+  margin:0;
+  display:flex;flex-direction:column;gap:14px;
+  padding:24px 26px;
+  border:1px solid var(--dark-line);
+  border-radius:var(--r-card);
+  background:var(--dark-2);
+}
+.prompt-head{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  flex:none;
+}
+.reel-kicker{
+  margin:0;
+  font-size:var(--fs-xs);letter-spacing:.16em;text-transform:uppercase;color:var(--dark-muted);
+}
+.prompt-body{
+  flex:1;min-height:0;
+  max-height:min(520px,62vh);
+  overflow-y:auto;
+  padding-right:10px;
+  font-size:13px;line-height:1.7;color:var(--dark-muted);
+  scrollbar-width:thin;
+}
+.prompt-body::-webkit-scrollbar{width:6px}
+.prompt-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+.prompt-body h4{
+  margin:20px 0 8px;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dark-text);font-weight:600;
+}
+.prompt-body h4:first-child{margin-top:0}
+.prompt-body p{margin:0}
+.prompt-lines{margin:0;padding:0;list-style:none}
+.prompt-lines li{
+  position:relative;
+  padding-left:56px;
+  margin-bottom:8px;
+}
+.prompt-lines .t{
+  position:absolute;left:0;top:1px;
+  font-size:10px;letter-spacing:.06em;color:var(--dark-text);opacity:.6;
+  font-variant-numeric:tabular-nums;
+}
+
+.play{
+  position:absolute;top:50%;left:50%;translate:-50% -50%;z-index:3;
+  width:74px;height:74px;border-radius:50%;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.94);
+  color:#111;
+  box-shadow:0 12px 30px -10px rgba(0,0,0,.6);
+  transition:transform .2s var(--ease),background .2s var(--ease);
+}
+.play:hover{transform:translate(-50%,-50%) scale(1.06);background:#fff}
+.play svg{margin-left:3px}
+.tag{
+  position:absolute;top:18px;left:18px;z-index:3;
+  padding:6px 11px;border-radius:var(--r-pill);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(0,0,0,.55);color:#fff;
+  backdrop-filter:blur(6px);
+}
+
+.steps{margin-top:64px}
+.steps h2{
+  margin:0 0 20px;
+  font-size:clamp(20px,2vw,24px);
+  font-weight:600;letter-spacing:-.02em;
+}
+.step-card{
+  list-style:none;
+  margin:0;padding:0;
+  border:1px solid var(--dark-line);
+  border-radius:var(--r-card);
+  background:var(--dark-2);
+  overflow:hidden;
+}
+.step{
+  display:grid;
+  grid-template-columns:28px minmax(0,1fr) auto;
+  align-items:start;
+  gap:18px;
+  padding:30px 32px;
+  border-top:1px solid var(--dark-line);
+}
+.step:first-child{border-top:0}
+.step-icon{
+  display:grid;place-items:center;
+  width:28px;height:28px;
+  margin-top:1px;
+  color:var(--dark-text);
+}
+.step:first-child .step-icon{color:var(--lime)}
+.step-body h3{margin:0 0 6px;font-size:var(--fs-h3);font-weight:600;letter-spacing:-.01em}
+.step-body p{margin:0;max-width:62ch;font-size:15px;line-height:1.55;color:var(--dark-muted)}
+.step-action{align-self:center}
+
+/* 3 · 视频墙 */
+.gallery{padding:88px 0 96px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:20px;
+}
+.card{
+  display:block;
+  border-radius:16px;
+  overflow:hidden;
+  background:var(--dark-2);
+  border:1px solid var(--dark-line);
+  transition:border-color .2s var(--ease),transform .2s var(--ease);
+}
+.card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-3px)}
+.card .video-slot{aspect-ratio:9/16;border-radius:0}
+.card .play{
+  width:52px;height:52px;opacity:0;pointer-events:none;
+  transition:opacity .2s var(--ease),transform .2s var(--ease);
+}
+.card:hover .play,.card:focus-visible .play{opacity:1}
+.video-slot.is-playing .play{opacity:0;pointer-events:none}
+.card-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px}
+.card-meta .name{font-size:var(--fs-sm);font-weight:600}
+.card-meta .dur{
+  font-size:11px;color:var(--dark-muted);
+  padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.06);
+}
+.tone-1{background:linear-gradient(150deg,#3b3128,#1d1813)}
+.tone-2{background:linear-gradient(150deg,#2c3340,#151a20)}
+.tone-3{background:linear-gradient(150deg,#3a2b3d,#1a131b)}
+.tone-4{background:linear-gradient(150deg,#243328,#131a15)}
+.tone-5{background:linear-gradient(150deg,#3d3226,#1c1710)}
+.tone-6{background:linear-gradient(150deg,#2b2c3a,#14151c)}
+
+/* 还没有视频的占位卡 */
+.card-empty{cursor:default}
+.card-empty:hover{transform:none;border-color:var(--dark-line)}
+.card-empty .video-slot{
+  display:grid;place-items:center;
+  background:repeating-linear-gradient(135deg,#1a1a19 0 10px,#171716 10px 20px);
+}
+.card-empty .slot-label{
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6c6a65;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.foot{
+  background:var(--dark);
+  color:var(--dark-muted);
+  border-top:1px solid var(--dark-line);
+  padding:36px 0;
+  font-size:13px;
+}
+.foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+.foot nav{display:flex;gap:22px;flex-wrap:wrap}
+.foot a:hover{color:var(--dark-text)}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:1024px){
+  .hero{padding:112px 0 64px}
+  .rail{display:none}
+  .stage{height:auto;margin-top:44px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:768px){
+  .nav{gap:16px;padding:8px 10px 8px 18px}
+  .nav-links{display:none}
+  .brand{font-size:13px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .step{grid-template-columns:24px minmax(0,1fr);padding:24px 22px}
+  .step-action{grid-column:2;justify-self:start;margin-top:4px}
+  .step-icon{width:24px;height:24px}
+  .section-head{flex-direction:column;align-items:flex-start;gap:10px}
+  .showreel{grid-template-columns:1fr;gap:28px}
+}
+@media (max-width:560px){
+  .wrap{width:min(100% - 32px,var(--container))}
+  .hero{padding:104px 0 56px}
+  .hero h1{letter-spacing:-.03em}
+  .hero-actions .btn{flex:1 1 auto}
+  .phone{width:min(78vw,300px)}
+  .play{width:60px;height:60px}
+  .grid{grid-template-columns:1fr}
+  .workflow{padding-top:56px}
+  .steps{margin-top:44px}
+  .gallery{padding:56px 0 64px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <a class="brand" href="#top">STREETTALK<span class="brand-dot">.</span></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#workflow">How it works</a>
+    <a href="#work">Video library</a>
+  </nav>
+  <a class="btn btn-primary btn-sm" href="#contact">Book Your Call</a>
+</header>
+
+<main id="main">
+
+  <!-- =====================================================
+       1 · HERO — 左轨 / 手机 / 右轨 三栏联动
+       换视频、改顺序：只改脚本里的 SCENES 数组
+       ===================================================== -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Unscripted street interviews</p>
+        <h1>Authentic<br>generated Content<sup>™</sup></h1>
+        <p class="lede">Real strangers. Real reactions. No casting. No coaching. Just ad creative your audience actually trusts.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Book Your Call</a>
+          <a class="btn btn-quiet" href="#work">Watch the work</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage" aria-roledescription="carousel" aria-label="Rotating street interviews">
+      <!-- 左轨：产品方块。换真实产品图时，把 .mono 换成 <img> -->
+      <div class="rail rail-left" aria-hidden="true">
+        <div class="tile tile-left" style="--w:164px"><div class="tile-face"><div class="mono" style="background:linear-gradient(150deg,#2b2b2e,#111113)">S<img class="tile-img" src="assets/products/01.jpg" alt="" loading="lazy"></div></div></div>
+        <div class="tile tile-left" style="--w:164px"><div class="tile-face"><div class="mono" style="background:linear-gradient(150deg,#e9d5c6,#d3b5a2)">G<img class="tile-img" src="assets/products/02.jpg" alt="" loading="lazy"></div></div></div>
+        <div class="tile tile-left" style="--w:164px"><div class="tile-face"><div class="mono" style="background:linear-gradient(150deg,#cfe9d8,#a9d3b8)">M<img class="tile-img" src="assets/products/03.png" alt="" loading="lazy"></div></div></div>
+        <div class="tile tile-left" style="--w:164px"><div class="tile-face"><div class="mono" style="background:linear-gradient(150deg,#d8d5f2,#b7b1ff)">E<img class="tile-img" src="assets/products/04.jpg" alt="" loading="lazy"></div></div></div>
+        <div class="tile tile-left" style="--w:164px"><div class="tile-face"><div class="mono" style="background:linear-gradient(150deg,#f0dcc4,#e0bd94)">W<img class="tile-img" src="assets/products/05.jpg" alt="" loading="lazy"></div></div></div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-screen">
+          <video class="phone-video" muted loop playsinline autoplay preload="auto" aria-label="StreetTalk episode preview"></video>
+          <span class="phone-notch" aria-hidden="true"></span>
+          <div class="phone-top">
+            <span class="live"><i></i>ON THE FLOOR</span>
+          </div>
+          <div class="phone-bottom">
+            <img class="thumb" src="assets/avatar.png" alt="">
+            <div class="meta">
+              <div class="kicker">StreetTalk Originals</div>
+              <div class="title" data-scene-title>Beauty, unfiltered.</div>
+            </div>
+            <span class="go" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右轨：数据方块 -->
+      <div class="rail rail-right" aria-hidden="true">
+        <div class="tile tile-right" style="--w:164px">
+          <div class="tile-face">
+            <svg viewBox="0 0 120 74" fill="none">
+              <path class="chart-line" d="M2 58C18 58 24 26 42 32s26 30 44 8 20-22 32-28" stroke="#5d55e8" stroke-width="2.4" stroke-linecap="round"/>
+              <circle class="pulse" cx="86" cy="40" r="3.4" fill="#5d55e8"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tile tile-right" style="--w:164px">
+          <div class="tile-face">
+            <svg viewBox="0 0 120 74" fill="none"><g fill="#5d55e8">
+              <rect class="bar-h" x="4" y="10" width="112" height="7" rx="3.5" opacity=".85"/>
+              <rect class="bar-h" style="animation-delay:.08s" x="4" y="26" width="88" height="7" rx="3.5" opacity=".7"/>
+              <rect class="bar-h" style="animation-delay:.16s" x="4" y="42" width="100" height="7" rx="3.5" opacity=".55"/>
+              <rect class="bar-h" style="animation-delay:.24s" x="4" y="58" width="64" height="7" rx="3.5" opacity=".35"/>
+            </g></svg>
+          </div>
+        </div>
+        <div class="tile tile-right" style="--w:164px">
+          <div class="tile-face">
+            <svg viewBox="0 0 120 74" fill="none"><g fill="#5d55e8">
+              <rect class="bar-v" x="6" y="34" width="12" height="34" rx="4" opacity=".45"/>
+              <rect class="bar-v" style="animation-delay:.08s" x="26" y="22" width="12" height="46" rx="4" opacity=".6"/>
+              <rect class="bar-v" style="animation-delay:.16s" x="46" y="40" width="12" height="28" rx="4" opacity=".4"/>
+              <rect class="bar-v" style="animation-delay:.24s" x="66" y="14" width="12" height="54" rx="4" opacity=".8"/>
+              <rect class="bar-v" style="animation-delay:.32s" x="86" y="26" width="12" height="42" rx="4" opacity=".65"/>
+              <rect class="bar-v" style="animation-delay:.4s" x="106" y="8" width="12" height="60" rx="4" opacity=".95"/>
+            </g></svg>
+          </div>
+        </div>
+        <div class="tile tile-right" style="--w:164px">
+          <div class="tile-face">
+            <svg viewBox="0 0 120 74" fill="none"><g fill="#5d55e8">
+              <circle class="pulse" cx="10" cy="14" r="5"/>
+              <circle class="pulse" style="animation-delay:.4s" cx="10" cy="37" r="5" opacity=".6"/>
+              <circle class="pulse" style="animation-delay:.8s" cx="10" cy="60" r="5" opacity=".3"/>
+              <rect class="bar-h" x="24" y="10" width="86" height="8" rx="4" opacity=".8"/>
+              <rect class="bar-h" style="animation-delay:.1s" x="24" y="33" width="64" height="8" rx="4" opacity=".5"/>
+              <rect class="bar-h" style="animation-delay:.2s" x="24" y="56" width="74" height="8" rx="4" opacity=".3"/>
+            </g></svg>
+          </div>
+        </div>
+        <div class="tile tile-right" style="--w:164px">
+          <div class="tile-face">
+            <svg viewBox="0 0 120 74" fill="none">
+              <path d="M10 64a50 50 0 0 1 100 0" stroke="rgba(93,85,232,.18)" stroke-width="9" stroke-linecap="round"/>
+              <path class="arc" d="M10 64a50 50 0 0 1 74-43" stroke="#5d55e8" stroke-width="9" stroke-linecap="round"/>
+              <circle class="pulse" cx="84" cy="21" r="3.2" fill="#5d55e8"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-nav">
+      <span class="hint">Live reel</span>
+      <button class="dot" type="button" data-go="0" aria-label="Show scene 1" aria-current="true"></button>
+      <button class="dot" type="button" data-go="1" aria-label="Show scene 2"></button>
+      <button class="dot" type="button" data-go="2" aria-label="Show scene 3"></button>
+      <button class="dot" type="button" data-go="3" aria-label="Show scene 4"></button>
+      <button class="dot" type="button" data-go="4" aria-label="Show scene 5"></button>
+    </div>
+  </section>
+
+  <div class="dark">
+
+    <!-- ---------- 2 · 视频 + 三步 ---------- -->
+    <section class="workflow" id="workflow">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>One brief. Three steps.</h2>
+            <p>From a blank page to a scroll-stopping street interview, without a crew.</p>
+          </div>
+          <a class="more" href="#work">See recent work →</a>
+        </div>
+
+        <figure class="showreel">
+          <div class="video-slot tone-1">
+            <video muted loop playsinline preload="metadata" aria-label="Showreel video">
+              <source src="assets/videos/showreel.mp4" type="video/mp4">
+            </video>
+            <span class="tag">Showreel · 01</span>
+            <button class="play" type="button" aria-label="Play showreel">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+            </button>
+          </div>
+          <figcaption class="reel-copy">
+            <div class="prompt-head">
+              <p class="reel-kicker">Prompt · Part 1 · 00:29</p>
+              <button class="btn btn-dark btn-sm" type="button" data-copy-prompt-full>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+                <span data-copy-label-full>Copy prompt</span>
+              </button>
+            </div>
+
+            <div class="prompt-body" tabindex="0">
+              <h4>Asset bindings</h4>
+              <p>Create a new 29-second vertical 9:16 UGC street-interview ad, part 1 of one continuous beach blind-taste story. [image 1] defines the adult female HOST: blonde messy updo, black narrow sunglasses, turquoise open shirt over floral swim top, light denim shorts; she now holds a black handheld microphone, no water bottle or branded bag. [image 2] defines adult male TASTER A: short blond buzzcut, white vintage graphic T-shirt. [image 3] defines adult female TASTER B: long blonde hair, blue cap, turquoise swim top, open pale striped shirt, brown shorts. [image 4] defines adult female TASTER C: blonde hair, black cowboy hat, white tank, green sport shorts. Keep faces, hair, wardrobe and speaker voices consistent. [image 5] defines the exact 330mL Living Things Lemon &amp; Ginger can: pale blue, dark green stacked Living Things lettering, yellow lemon illustration, LEMON &amp; GINGER text. The product is sample 3, always the central YELLOW straw. Behind a plain cardboard screen on a beach table are five neutral covered cups, left-to-right 1 BLUE, 2 ORANGE, 3 YELLOW, 4 RED, 5 PURPLE. Only the host knows identities until the reveal. Other samples are unidentified sodas; no competitor branding. Fresh individual straws for each taster. Product image binds packaging only, not background.</p>
+
+              <h4>Reference alignment</h4>
+              <p>Film a new video using [video 1], the corresponding opening source segment, for eye-level smartphone medium shots, close microphone placement, ocean/sand background, breeze, candid quick turn-taking, straw close-ups, reaction punch-ins and vertical split-screen tasting montage. Preserve hook, shopping-priority question, five-sample rules, tasting 5 then 4 then 3. Use warm daylight on the beach. No shot longer than two seconds; cut between face, hands, box numbers and speaker while speech flows across cuts. Small handheld drift, no polished studio moves. Short bold white captions with colored emphasis track the exact English dialogue, using red hook blocks. Sips and a quiet upbeat original instrumental sit under clear synchronized voices and wind. Before the reveal no can or brand is visible to tasters. Show each sip before its spoken reaction. End after Taster B finishes her sample-3 reaction; no reveal or outro in this part.</p>
+
+              <h4>Complete English dialogue</h4>
+              <ul class="prompt-lines">
+                <li><span class="t">0–5s</span> HOST, to camera and gesturing at box: &ldquo;Five drinks. No labels. Could you taste the difference?&rdquo;</li>
+                <li><span class="t">5–9s</span> HOST, microphone to A: &ldquo;What matters most when you pick a soda?&rdquo; A, quick grin: &ldquo;Taste. Every time.&rdquo;</li>
+                <li><span class="t">9–12s</span> HOST: &ldquo;Fair. I check the ingredients too.&rdquo;</li>
+                <li><span class="t">12–17s</span> HOST, to B and C and counting straws: &ldquo;Try all five. Then pick the one you&rsquo;d buy again.&rdquo;</li>
+                <li><span class="t">17–21s</span> A sips purple 5, pauses, slight lip purse: &ldquo;Mm. A bit sweet for me.&rdquo;</li>
+                <li><span class="t">21–24s</span> C sips red 4, considering: &ldquo;That one&rsquo;s pretty plain.&rdquo;</li>
+                <li><span class="t">24–29s</span> B sips yellow 3, swallows, eyebrows lift, small smile: &ldquo;Ooh. Lemon... then a little ginger kick.&rdquo;</li>
+              </ul>
+            </div>
+          </figcaption>
+        </figure>
+
+        <div class="steps">
+          <h2>Start in 3 steps</h2>
+          <ol class="step-card">
+
+            <li class="step">
+              <span class="step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4h4a2 2 0 0 1 2 2v1h1a2 2 0 0 1 2 2v3h-1.5a2.5 2.5 0 0 0 0 5H19v3a2 2 0 0 1-2 2h-3v-1.5a2.5 2.5 0 0 0-5 0V21H6a2 2 0 0 1-2-2v-3h1.5a2.5 2.5 0 0 0 0-5H4V8a2 2 0 0 1 2-2h2V6a2 2 0 0 1 2-2Z"/></svg>
+              </span>
+              <div class="step-body">
+                <h3>Install the plugin</h3>
+                <p>Open the plugin page, install it, and sign in to your account. It only takes a minute.</p>
+              </div>
+              <div class="step-action">
+                <a class="btn btn-dark btn-sm" href="#contact">Install plugin</a>
+              </div>
+            </li>
+
+            <li class="step">
+              <span class="step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>
+              </span>
+              <div class="step-body">
+                <h3>Prepare your brief</h3>
+                <p>Choose your story or concept and outline the key scenes. Gather any source material or visual references you want to include.</p>
+              </div>
+              <div class="step-action"></div>
+            </li>
+
+            <li class="step">
+              <span class="step-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.6"/><path d="M12 4v4M12 16v4M4.9 7.6 7.6 10M16.4 14l2.7 2.4M7.6 14l-2.7 2.4M16.4 10l2.7-2.4"/></svg>
+              </span>
+              <div class="step-body">
+                <h3>Run your first prompt</h3>
+                <p>Paste the example prompt into your connected agent. Adapt the subject to your brief and add any source material you want to use.</p>
+              </div>
+              <div class="step-action">
+                <button class="btn btn-dark btn-sm" type="button" data-copy-prompt>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+                  <span data-copy-label>Copy prompt</span>
+                </button>
+              </div>
+            </li>
+
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- 3 · 视频墙 ---------- -->
+    <section class="gallery" id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>More from the floor</h2>
+            <p>Four episodes so far. New ones go up as we shoot.</p>
+          </div>
+          <a class="more" href="#contact">Request full library →</a>
+        </div>
+
+        <div class="grid">
+          <!-- 有视频：给 <video> 填 <source>；没视频的卡改成 class="card card-empty" -->
+          <a class="card" href="#work" aria-label="Episode 01 — play video">
+            <div class="video-slot tone-1">
+              <video muted loop playsinline preload="metadata">
+                <source src="assets/videos/card-01.mp4" type="video/mp4">
+              </video>
+              <span class="play" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+              </span>
+            </div>
+            <div class="card-meta"><span class="name">Episode 01</span><span class="dur">01:39</span></div>
+          </a>
+          <a class="card" href="#work" aria-label="Episode 02 — play video">
+            <div class="video-slot tone-2">
+              <video muted loop playsinline preload="metadata">
+                <source src="assets/videos/card-02.mp4" type="video/mp4">
+              </video>
+              <span class="play" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+              </span>
+            </div>
+            <div class="card-meta"><span class="name">Episode 02</span><span class="dur">00:57</span></div>
+          </a>
+          <a class="card" href="#work" aria-label="Episode 03 — play video">
+            <div class="video-slot tone-3">
+              <video muted loop playsinline preload="metadata">
+                <source src="assets/videos/card-03.mp4" type="video/mp4">
+              </video>
+              <span class="play" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+              </span>
+            </div>
+            <div class="card-meta"><span class="name">Episode 03</span><span class="dur">00:58</span></div>
+          </a>
+          <a class="card" href="#work" aria-label="Episode 04 — play video">
+            <div class="video-slot tone-4">
+              <video muted loop playsinline preload="metadata">
+                <source src="assets/videos/card-04.mp4" type="video/mp4">
+              </video>
+              <span class="play" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+              </span>
+            </div>
+            <div class="card-meta"><span class="name">Episode 04</span><span class="dur">00:49</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <span>© 2026 StreetTalk — Authentic generated Content™</span>
+    <nav aria-label="Footer">
+      <a href="#workflow">How it works</a>
+      <a href="#work">Video library</a>
+      <a href="#top">Back to top</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   场景表：改这里就能换视频 / 改顺序 / 加场景
+   左、右轨道各有 5 块，和这里的 5 条一一对应
+   ========================================================= */
+const SCENES = [
+  { src: 'assets/videos/hero.mp4',    title: 'Beauty, unfiltered.' },
+  { src: 'assets/videos/card-01.mp4', title: 'Grüns, on the street.' },
+  { src: 'assets/videos/card-02.mp4', title: 'Modern Gents, unfiltered.' },
+  { src: 'assets/videos/card-03.mp4', title: 'Eko Health, in one take.' },
+  { src: 'assets/videos/card-04.mp4', title: 'Whatnot, straight up.' }
+];
+
+const INTERVAL = 8000;      // 自动轮播间隔（毫秒）
+const OFFSET   = 196;       // 相邻方块中心距；块宽固定 164，所以缝隙恒为 32px
+
+const video   = document.querySelector('.phone-video');
+const titleEl = document.querySelector('[data-scene-title]');
+const stage   = document.getElementById('stage');
+const dots    = Array.from(document.querySelectorAll('.stage-nav .dot'));
+const tiles   = {
+  left:  Array.from(document.querySelectorAll('.rail-left .tile')),
+  right: Array.from(document.querySelectorAll('.rail-right .tile'))
+};
+
+let active = 0;
+let timer  = null;
+
+/* 环形距离：0 是当前，±1 相邻，±2 最远 */
+function circularDistance(i, current, n) {
+  let d = i - current;
+  if (d > n / 2) d -= n;
+  if (d < -n / 2) d += n;
+  return d;
+}
+
+function renderTiles(extraX = 0) {
+  /* 排布形状按「槽位」算，不按图片本身算：
+     这样滑块每次移动之后，整体依然保持同一个 V / 倒 V，
+     方块只是沿着这条曲线往前挪。 */
+  const FORMATION = {
+    left:  [ 30, -40,  30],   // 倒 V：从手机往外 → 低、高、低
+    right: [-30,  40, -30]    // V   ：从手机往外 → 高、低、高
+  };
+
+  /* 槽位横坐标：块宽 164，缩放 1 / 0.75 / 0.5，缝隙恒为 32px
+     0      → 0
+     0.75   → -(164 + 32) = -196
+     0.5    → -(196 + 123 + 32) = -351 */
+  const SLOT_X = [0, -196, -351];
+
+  ['left', 'right'].forEach((side) => {
+    tiles[side].forEach((tile, i) => {
+      const d = circularDistance(i, active, SCENES.length);
+      const abs = Math.abs(d);
+
+      // 尺寸按「离手机的距离」决定：贴着手机 100%，往外 75%，最外 50%
+      // 左边从左往右读是 50 → 75 → 100，右边读是 100 → 75 → 50，正好相反
+      const scale = abs === 0 ? 1 : abs === 1 ? 0.75 : 0.5;
+
+      // 左轨显示「当前 + 左侧两块待命」，右轨显示「当前 + 右侧两块已走过」
+      const onStage = side === 'left' ? d >= 0 : d <= 0;
+      const opacity = !onStage || abs > 2
+        ? 0
+        : abs === 0 ? 1 : abs === 1 ? 0.8 : 0.45;
+
+      // 横向位置：因为三块大小不同（100/75/50），
+      // 用固定的槽位坐标才能保证它们之间的缝隙始终是 32px
+      const slot = side === 'left' ? d : -d;
+      const inSlot = slot >= 0 && slot <= 2;
+      const base = inSlot ? (side === 'left' ? SLOT_X[slot] : -SLOT_X[slot]) : -d * OFFSET;
+      const x = base + extraX;
+      const y = inSlot ? FORMATION[side][slot] : 0;
+
+      tile.style.transform = `translate(${x}px, calc(-50% + ${y}px)) scale(${scale})`;
+      tile.style.opacity = opacity;
+      tile.style.zIndex = String(10 - abs);
+    });
+  });
+
+  /* 图表动画：每次换幕，让可见的卡片重播一次（一次性，不循环） */
+  tiles.right.forEach((tile) => {
+    const visible = Number(tile.style.opacity) > 0.2;
+    tile.classList.remove('chart-in');
+    if (visible) {
+      void tile.offsetWidth;          // 强制重排，动画才会从 0 重新开始
+      tile.classList.add('chart-in');
+    }
+  });
+}
+
+function renderDots() {
+  dots.forEach((dot, i) => {
+    if (i === active) dot.setAttribute('aria-current', 'true');
+    else dot.removeAttribute('aria-current');
+  });
+}
+
+/* 换视频：淡出 → 换源 → 首帧就绪后淡入，避免黑闪 */
+function swapVideo(scene) {
+  if (!video || video.dataset.src === scene.src) return;
+  video.dataset.src = scene.src;
+  video.style.opacity = '0';
+
+  let revealed = false;
+  const reveal = () => {
+    if (revealed) return;
+    revealed = true;
+    if (heroActive) video.play().catch(() => {});
+    video.style.opacity = '1';
+    video.removeEventListener('loadeddata', reveal);
+  };
+  video.addEventListener('loadeddata', reveal);
+  setTimeout(reveal, 1400);   // 兜底：万一下载失败，也不会一直黑屏
+
+  video.src = scene.src;
+  video.load();
+}
+
+function goTo(index, { manual = false } = {}) {
+  active = (index + SCENES.length) % SCENES.length;
+  renderTiles();
+  renderDots();
+  swapVideo(SCENES[active]);
+  if (titleEl) titleEl.textContent = SCENES[active].title;
+  if (manual) restart();
+}
+
+function restart() {
+  clearInterval(timer);
+  timer = setInterval(() => goTo(active + 1), INTERVAL);
+}
+
+dots.forEach((dot) => {
+  dot.addEventListener('click', () => goTo(Number(dot.dataset.go), { manual: true }));
+});
+
+/* 注意：这里不要再让「鼠标悬停」清掉定时器。
+   页面加载时如果指针正好停在舞台上，mouseenter 会立刻触发，
+   之后 mouseleave 不一定再发生，轮播就永久卡住——之前就是这个原因。 */
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) clearInterval(timer);
+  else restart();
+});
+
+/* 左轨产品图：文件不存在就把 <img> 摘掉，露出底下的字母占位 */
+document.querySelectorAll('.tile-img').forEach((img) => {
+  const drop = () => img.remove();
+  if (img.complete && img.naturalWidth === 0) drop();
+  else img.addEventListener('error', drop);
+});
+
+/* ---------------------------------------------------------
+   视频互斥：任何时刻只允许一个视频在播
+   --------------------------------------------------------- */
+const heroEl = document.querySelector('.phone-video');
+let heroActive = true;   // hero 是否该自动播；被别的视频顶掉后置 false
+
+function pauseOthers(except) {
+  document.querySelectorAll('video').forEach((other) => {
+    if (other === except || other.paused) return;
+    if (other === heroEl) heroActive = false;
+    other.pause();
+  });
+}
+
+document.querySelectorAll('video').forEach((v) => {
+  v.addEventListener('play', () => pauseOthers(v));
+});
+
+/* Hero：自动播放只能是静音；点一下切声音，并把播放权抢回来 */
+if (heroEl) {
+  heroEl.addEventListener('click', () => {
+    heroEl.muted = !heroEl.muted;
+    if (heroEl.muted) return;
+    heroActive = true;
+    pauseOthers(heroEl);
+    if (heroEl.paused) heroEl.play().catch(() => {});
+  });
+}
+
+/* 首屏：直接播放第一条，不淡入 */
+if (video && SCENES.length) {
+  video.dataset.src = SCENES[0].src;
+  video.src = SCENES[0].src;
+  video.muted = true;
+  video.play().catch(() => {});
+  if (titleEl) titleEl.textContent = SCENES[0].title;
+}
+/* 入场：只让左轨的第一块从屏幕外左侧滑进来 —— 一次性动作，不走循环。
+   其余方块一开始就站在自己的位置上，等它滑到位。 */
+renderTiles(0);
+
+const firstTile = tiles.left[0];
+if (firstTile) {
+  firstTile.style.transition = 'none';
+  firstTile.style.opacity = '0';
+  firstTile.style.transform = 'translate(-560px, calc(-50% + 30px)) scale(1)';
+  requestAnimationFrame(() => {
+    firstTile.style.transition = '';
+    requestAnimationFrame(() => {
+      firstTile.style.opacity = '';
+      renderTiles(0);   // 归位：从这里开始由 CSS 过渡接管
+    });
+  });
+}
+restart();
+
+/* 注意：这里原本会因为系统「减少动态效果」而 clearInterval，
+   在你机器上那条设置很可能是开的，结果就是轮播永远不启动。
+   现在改成只关掉过渡动画（CSS 那边已经处理），轮播照常走。 */
+
+/* ---------------------------------------------------------
+   第 2 部分：大视频播放 / 暂停
+   --------------------------------------------------------- */
+const hasSource = (videoEl) => !!videoEl.querySelector('source');
+
+function toggleVideo(videoEl) {
+  if (!hasSource(videoEl)) return;
+  if (videoEl.paused) {
+    pauseOthers(videoEl);   // 先停掉其它视频，再开声音播放
+    videoEl.muted = false;
+    videoEl.play();
+  } else {
+    videoEl.pause();
+  }
+}
+
+document.querySelectorAll('.video-slot').forEach((slot) => {
+  const media = slot.querySelector('video');
+  if (!media) return;
+  media.addEventListener('play', () => slot.classList.add('is-playing'));
+  media.addEventListener('pause', () => slot.classList.remove('is-playing'));
+  const badge = slot.querySelector('.play');
+  if (badge) {
+    badge.addEventListener('click', (event) => {
+      if (!hasSource(media)) return;
+      event.preventDefault();
+      event.stopPropagation();
+      toggleVideo(media);
+    });
+  }
+});
+
+/* 视频墙：整张卡可点；占位卡不动 */
+document.querySelectorAll('.card').forEach((card) => {
+  const media = card.querySelector('video');
+  if (!media) return;
+  card.addEventListener('click', (event) => {
+    if (!hasSource(media)) return;
+    event.preventDefault();
+    toggleVideo(media);
+  });
+});
+
+/* ---------------------------------------------------------
+   Copy prompt
+   --------------------------------------------------------- */
+const EXAMPLE_PROMPT = `Write a 30-second unscripted street interview for {{brand}}.
+Setting: a busy convention floor, natural light, handheld camera.
+Beat 1 (0-6s): a stranger reacts to the product in one honest sentence.
+Beat 2 (6-18s): they compare it to what they use today.
+Beat 3 (18-30s): a second stranger disagrees — keep the tension.
+Rules: no actors, no scripted lines, no music under dialogue.`;
+
+const copyBtn = document.querySelector('[data-copy-prompt]');
+if (copyBtn) {
+  copyBtn.addEventListener('click', async () => {
+    const label = copyBtn.querySelector('[data-copy-label]');
+    const original = label.textContent;
+    try {
+      await navigator.clipboard.writeText(EXAMPLE_PROMPT);
+      label.textContent = 'Copied';
+    } catch {
+      label.textContent = 'Copy failed';
+    }
+    copyBtn.disabled = true;
+    setTimeout(() => {
+      label.textContent = original;
+      copyBtn.disabled = false;
+    }, 1600);
+  });
+}
+
+/* 复制右侧整段 prompt（面板里那份） */
+const copyFull = document.querySelector('[data-copy-prompt-full]');
+if (copyFull) {
+  copyFull.addEventListener('click', async () => {
+    const label = copyFull.querySelector('[data-copy-label-full]');
+    const body = document.querySelector('.prompt-body');
+    try {
+      await navigator.clipboard.writeText(body ? body.innerText.trim() : '');
+      label.textContent = 'Copied';
+    } catch {
+      label.textContent = 'Copy failed';
+    }
+    copyFull.disabled = true;
+    setTimeout(() => {
+      label.textContent = 'Copy prompt';
+      copyFull.disabled = false;
+    }, 1600);
+  });
+}
+</script>
+</body>
+</html>
